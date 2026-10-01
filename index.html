@@ -3,578 +3,902 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#07090e" />
-    <title>EWS TECH — Ideias sem limites. Tecnologia sob medida.</title>
+    <meta name="theme-color" content="#080a0f" />
+    <title>EWS TECH — Sua próxima grande impressão.</title>
     <meta
       name="description"
-      content="Sites, aplicativos e sistemas sob medida. Conheça os projetos da EWS TECH e transforme sua próxima ideia em uma experiência digital. Bastos, SP."
+      content="Estúdio de design e desenvolvimento em Bastos, SP. Sites, aplicativos e sistemas sob medida. Conheça os projetos da EWS TECH e converse pelo WhatsApp."
     />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link
-      rel="preload"
-      as="image"
-      href="assets/hero.webp"
-      fetchpriority="high"
-    />
+    <link rel="preload" href="assets/hero.webp" as="image" />
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js" defer></script>
+    <script defer src="script.js"></script>
+    <script defer src="scene.js"></script>
   </head>
   <body>
     <a class="skip" href="#main">Pular para o conteúdo</a>
-    <div class="reading-progress" aria-hidden="true"></div>
-    <div class="cursor" aria-hidden="true"><span>Explorar ↗</span></div>
+    <div class="intro" aria-hidden="true">
+      <span class="intro-label">DESIGN · DESENVOLVIMENTO · EWS TECH</span>
+      <div class="intro-logo">EWS<span>TECH</span></div>
+      <div class="intro-bottom">
+        <span>UMA NOVA PERSPECTIVA.</span><span class="intro-number">000</span>
+      </div>
+      <div class="intro-line"></div>
+    </div>
+    <canvas id="pointer-trail" aria-hidden="true"></canvas>
+    <div class="cursor" aria-hidden="true"><span>EXPLORAR</span></div>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="scroll-progress" aria-hidden="true"></div>
     <header class="header">
       <a class="brand" href="#inicio" aria-label="EWS TECH, início"
-        ><span class="brand-symbol" aria-hidden="true">≋</span
-        ><span>EWS<span class="brand-tech">TECH</span></span></a
+        ><span class="brand-icon"
+          ><svg viewBox="0 0 56 50" fill="none" aria-hidden="true">
+            <path
+              d="M17 7h32l-5 8H12zm-5 14h32l-5 8H7zM7 35h32l-5 8H2z"
+              fill="currentColor"
+            /></svg></span
+        ><span class="brand-name">EWS<span>TECH</span></span></a
       >
-      <nav id="navigation" aria-label="Navegação principal">
-        <a href="#projetos">Projetos <sup>04</sup></a
-        ><a href="#solucoes">Soluções</a><a href="#sobre">O estúdio</a>
+      <div class="header-middle">
+        <span class="status-dot"></span> ABERTOS A NOVAS IDEIAS
+      </div>
+      <div class="header-actions">
+        <a href="#contato" class="header-contact magnetic"
+          >Vamos conversar <span>↗</span></a
+        ><button
+          class="menu-toggle"
+          type="button"
+          aria-controls="menu-dialog"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+          aria-label="Abrir menu"
+          hidden
+        >
+          <span></span><span></span>
+        </button>
+      </div>
+      <nav class="no-js-nav" aria-label="Navegação principal">
+        <a href="#projetos">Projetos</a><a href="#solucoes">Soluções</a
+        ><a href="#contato">Contato</a>
       </nav>
-      <a class="header-contact" href="#contato"
-        >Vamos conversar <span aria-hidden="true">↗</span></a
-      >
-      <button
-        class="menu-toggle"
-        type="button"
-        aria-controls="navigation"
-        aria-expanded="false"
-        aria-label="Abrir menu"
-      >
-        <span></span><span></span>
-      </button>
     </header>
+    <dialog class="menu-dialog" id="menu-dialog" aria-label="Menu principal">
+      <div class="menu-bars" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="menu-inner">
+        <div class="menu-top">
+          <a class="brand" href="#inicio"
+            ><span class="brand-icon"
+              ><svg viewBox="0 0 56 50" fill="none" aria-hidden="true">
+                <path
+                  d="M17 7h32l-5 8H12zm-5 14h32l-5 8H7zM7 35h32l-5 8H2z"
+                  fill="currentColor"
+                /></svg></span
+            ><span class="brand-name">EWS<span>TECH</span></span></a
+          ><button class="close-menu" type="button" aria-label="Fechar menu">
+            FECHAR <span>×</span>
+          </button>
+        </div>
+        <nav aria-label="Navegação principal">
+          <a href="#inicio"><small>01</small><span>Início</span><b>↗</b></a
+          ><a href="#solucoes"><small>02</small><span>Soluções</span><b>↗</b></a
+          ><a href="#projetos"><small>03</small><span>Projetos</span><b>↗</b></a
+          ><a href="#sobre"><small>04</small><span>O estúdio</span><b>↗</b></a
+          ><a href="#contato"><small>05</small><span>Contato</span><b>↗</b></a>
+        </nav>
+        <div class="menu-bottom">
+          <span>BASTOS, SP · BRASIL</span>
+          <div>
+            <a
+              href="https://wa.me/5514998277583?text=Ol%C3%A1%2C%20EWS%20TECH!%20Quero%20conversar%20sobre%20um%20projeto."
+              target="_blank"
+              rel="noopener noreferrer"
+              >WhatsApp ↗</a
+            ><a
+              href="https://www.instagram.com/ews_tec/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Instagram ↗</a
+            >
+          </div>
+        </div>
+      </div>
+    </dialog>
     <main id="main">
       <section class="hero" id="inicio" aria-labelledby="hero-title">
         <div class="hero-stage">
           <div class="hero-grid" aria-hidden="true"></div>
-          <div class="hero-topline">
+          <div class="hero-top">
             <span>ESTÚDIO DIGITAL INDEPENDENTE</span
-            ><span class="availability"><i></i> ABERTOS A NOVAS IDEIAS</span>
+            ><span>BASTOS, SP — PARA O MUNDO</span>
           </div>
           <div class="hero-art" aria-hidden="true">
             <img
+              class="hero-fallback"
               src="assets/hero.webp"
               alt=""
               width="1536"
               height="1024"
               fetchpriority="high"
-            /><span class="orbit orbit-one"></span
-            ><span class="orbit orbit-two"></span>
+            /><canvas id="sculpture"></canvas><span class="art-orbit"></span
+            ><span class="art-orbit orbit-two"></span>
           </div>
-          <div class="hero-heading">
-            <h1 id="hero-title">
-              <span class="hero-line"><span>Sua ideia.</span></span
-              ><span class="hero-line"
-                ><span class="hero-emphasis"
-                  >Sem limites<span class="blue-period">.</span></span
-                ></span
-              >
-            </h1>
+          <div class="hero-note">
+            <span class="crosshair" aria-hidden="true">+</span
+            ><span>DESIGN QUE ATRAI.<br />TECNOLOGIA QUE TRANSFORMA.</span>
           </div>
+          <h1 id="hero-title">
+            <span class="line"><span>TECNOLOGIA</span></span
+            ><span class="line"
+              ><span>QUE <em>MARCA.</em></span></span
+            >
+          </h1>
           <div class="hero-bottom">
-            <div>
-              <p>
-                Sites, aplicativos e sistemas que fazem<br
-                  class="desktop-break"
-                />
-                sua marca ir além do esperado.
-              </p>
-              <a class="text-link" href="#contato"
-                >Vamos criar algo extraordinário
-                <span aria-hidden="true">↗</span></a
-              >
-            </div>
-            <a class="scroll-invite" href="#projetos"
-              ><span>ROLE PARA<br />DESCOBRIR</span
-              ><span class="circle-arrow" aria-hidden="true">↓</span></a
+            <p>
+              Sua próxima grande impressão começa aqui.<br />
+              Sites, aplicativos e sistemas feitos para o seu negócio.
+            </p>
+            <a class="hero-explore" href="#visao"
+              ><span>EXPLORE A EXPERIÊNCIA</span
+              ><span class="round-arrow magnetic" aria-hidden="true">↓</span></a
             >
           </div>
-          <div class="hero-footnote">
-            <span>BASTOS, SP — CONECTADOS AO MUNDO</span
-            ><span>DESIGN + CÓDIGO + ATITUDE</span>
+          <div class="hero-index">
+            <span>01 — EWS TECH</span
+            ><a href="#projetos">VER PROJETOS SELECIONADOS <span>↘</span></a>
           </div>
         </div>
       </section>
-      <section class="manifesto" aria-labelledby="manifesto-title">
-        <div class="manifesto-sticky">
+      <section class="vision" id="visao" aria-labelledby="vision-title">
+        <div class="vision-stage">
           <div class="section-label">
-            <span>01 / NOSSA ESSÊNCIA</span><span aria-hidden="true">↘</span>
+            <span>UMA PRIMEIRA IMPRESSÃO PODE MUDAR TUDO.</span
+            ><span>01 / VISÃO</span>
           </div>
-          <h2 id="manifesto-title" class="manifesto-text">
-            Seu negócio merece mais do que estar na internet. Merece ser
-            impossível de ignorar.
+          <h2 class="vision-title" id="vision-title">
+            <span>SEU NEGÓCIO.</span><span>EM OUTRO</span
+            ><span class="vision-accent"
+              >NÍVEL<span class="vision-star" aria-hidden="true"
+                ><svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                  <path
+                    d="M50 0v100M0 50h100M15 15l70 70M15 85l70-70"
+                    stroke="currentColor"
+                    stroke-width="5"
+                  /></svg></span
+            ></span>
           </h2>
-          <div class="manifesto-bottom">
-            <span class="asterisk" aria-hidden="true">✳</span>
-            <p>
-              Unimos design e tecnologia para transformar<br />uma primeira
-              impressão em novas possibilidades.
+          <div class="vision-bottom">
+            <span class="micro">CRIADO PARA SER LEMBRADO.</span>
+            <p class="word-reveal">
+              Transformamos boas ideias em experiências digitais que despertam
+              interesse, simplificam o dia a dia e aproximam sua marca das
+              pessoas certas.
             </p>
           </div>
         </div>
       </section>
-      <section class="work section" id="projetos" aria-labelledby="work-title">
-        <div class="work-heading reveal">
+      <section class="services" id="solucoes" aria-labelledby="services-title">
+        <div class="services-stage">
           <div class="section-label">
-            <span>02 / PROJETOS SELECIONADOS</span><span>2026</span>
+            <span>02 / O QUE CRIAMOS</span
+            ><span class="service-progress"
+              ><span id="service-current" aria-hidden="true">01</span> /
+              04</span
+            >
           </div>
-          <div class="heading-row">
-            <h2 id="work-title">Ideias reais.<br /><em>Projetos vivos.</em></h2>
-            <p>
-              Cada negócio tem uma história.<br />Estas são algumas que
-              ajudamos<br />a levar para o digital.
-            </p>
+          <h2 class="sr-only" id="services-title">
+            Soluções para o seu negócio
+          </h2>
+          <div class="service-scenes">
+            <article class="service-scene" data-service="0">
+              <div class="service-copy">
+                <span class="micro">PRESENÇA DIGITAL</span>
+                <h3>SITES QUE<br /><em>IMPRESSIONAM.</em></h3>
+                <p>
+                  Uma presença à altura da sua marca. Design com personalidade,
+                  navegação intuitiva e caminhos claros para transformar
+                  interesse em contato.
+                </p>
+                <div class="tags">
+                  <span>Sites institucionais</span><span>Landing pages</span
+                  ><span>Catálogos</span>
+                </div>
+                <a href="#contato" class="text-link"
+                  >Quero um site assim <span>↗</span></a
+                >
+              </div>
+              <div class="service-visual visual-site" aria-hidden="true">
+                <div class="mini-browser">
+                  <span>● ● ● <b>SUA MARCA / ONLINE</b></span>
+                  <div class="mini-site">
+                    <small>UM NOVO OLHAR.</small
+                    ><strong>Presença.<br />Com personalidade.</strong>
+                    <div class="mini-line"></div>
+                    <i>Vamos conversar ↗</i>
+                  </div>
+                </div>
+                <div class="floating-label">DESIGN + PERFORMANCE</div>
+              </div>
+            </article>
+            <article class="service-scene" data-service="1">
+              <div class="service-copy">
+                <span class="micro">MAIS PROXIMIDADE</span>
+                <h3>SEU NEGÓCIO.<br /><em>NA MÃO.</em></h3>
+                <p>
+                  Aplicativos pensados para facilitar a rotina dos seus
+                  clientes. Do agendamento ao atendimento, uma experiência
+                  simples em cada toque.
+                </p>
+                <div class="tags">
+                  <span>Android & iOS</span><span>Experiência mobile</span>
+                </div>
+                <a href="#contato" class="text-link"
+                  >Quero um aplicativo <span>↗</span></a
+                >
+              </div>
+              <div class="service-visual visual-app" aria-hidden="true">
+                <div class="phone">
+                  <span class="phone-notch"></span
+                  ><span class="micro">SUA MARCA</span
+                  ><strong>Tudo ao<br />seu alcance.</strong>
+                  <div class="phone-widget">
+                    <span>Seu próximo horário</span
+                    ><b>14:30 <small>Confirmado ✓</small></b>
+                  </div>
+                  <div class="phone-grid">
+                    <i>↗</i><i>◷</i><i>＋</i><i>☰</i>
+                  </div>
+                  <div class="phone-bottom"></div>
+                </div>
+                <span class="phone-orbit"></span>
+              </div>
+            </article>
+            <article class="service-scene" data-service="2">
+              <div class="service-copy">
+                <span class="micro">CONTROLE PARA CRESCER</span>
+                <h3>MENOS TAREFAS.<br /><em>MAIS VISÃO.</em></h3>
+                <p>
+                  Organize a operação e encontre informações sem complicação.
+                  Sistemas sob medida para conectar cadastros, agenda,
+                  financeiro e relatórios.
+                </p>
+                <div class="tags">
+                  <span>Gestão</span><span>Dashboards</span
+                  ><span>Relatórios</span>
+                </div>
+                <a href="#contato" class="text-link"
+                  >Quero um sistema <span>↗</span></a
+                >
+              </div>
+              <div class="service-visual visual-system" aria-hidden="true">
+                <div class="dashboard">
+                  <div class="dashboard-head">VISÃO GERAL <span>↗</span></div>
+                  <div class="dashboard-cards">
+                    <i>OPERAÇÃO<br /><b>Organizada.</b></i
+                    ><i>INFORMAÇÃO<br /><b>Conectada.</b></i>
+                  </div>
+                  <div class="dashboard-chart">
+                    <span></span><span></span><span></span><span></span
+                    ><span></span><span></span><span></span><span></span>
+                  </div>
+                  <small>CLAREZA PARA DECIDIR.</small>
+                </div>
+              </div>
+            </article>
+            <article class="service-scene" data-service="3">
+              <div class="service-copy">
+                <span class="micro">TUDO CONECTADO</span>
+                <h3>MENOS REPETIÇÃO.<br /><em>MAIS TEMPO.</em></h3>
+                <p>
+                  Conectamos ferramentas e automatizamos tarefas para sua equipe
+                  dedicar energia ao que realmente move o negócio.
+                </p>
+                <div class="tags">
+                  <span>Integrações</span><span>APIs</span
+                  ><span>Automações</span>
+                </div>
+                <a href="#contato" class="text-link"
+                  >Vamos simplificar <span>↗</span></a
+                >
+              </div>
+              <div class="service-visual visual-connect" aria-hidden="true">
+                <svg class="connection-lines" viewBox="0 0 500 430">
+                  <path
+                    d="M250 215 90 90M250 215 410 90M250 215 90 340M250 215 410 340"
+                  />
+                </svg>
+                <div class="connection-center">
+                  <svg viewBox="0 0 56 50" fill="none" aria-hidden="true">
+                    <path
+                      d="M17 7h32l-5 8H12zm-5 14h32l-5 8H7zM7 35h32l-5 8H2z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+                <span class="connection-node node-one">SITE</span
+                ><span class="connection-node node-two">APP</span
+                ><span class="connection-node node-three">GESTÃO</span
+                ><span class="connection-node node-four">DADOS</span>
+              </div>
+            </article>
+          </div>
+          <div class="service-footer">
+            <span>ESTRATÉGIA → DESIGN → DESENVOLVIMENTO</span>
+            <div class="service-dots" aria-hidden="true">
+              <i></i><i></i><i></i><i></i>
+            </div>
+            <span>ROLE PARA EXPLORAR ↓</span>
           </div>
         </div>
-        <div class="work-list">
-          <article
-            class="work-card work-manuais"
-            id="case-01"
-            aria-labelledby="title-01"
-            style="--order: 01"
+      </section>
+      <section class="portal" aria-labelledby="portal-title">
+        <div class="portal-stage">
+          <div class="portal-circle" aria-hidden="true"></div>
+          <div class="portal-grid" aria-hidden="true"></div>
+          <div class="portal-brand" aria-hidden="true">
+            <svg viewBox="0 0 56 50" fill="none" aria-hidden="true">
+              <path
+                d="M17 7h32l-5 8H12zm-5 14h32l-5 8H7zM7 35h32l-5 8H2z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+          <div class="portal-copy">
+            <span class="micro">O PONTO EM QUE TUDO SE CONECTA.</span>
+            <h2 id="portal-title">DA IDEIA.<br /><em>À REALIDADE.</em></h2>
+            <p>O efeito impressiona.<br />A solução faz a diferença.</p>
+          </div>
+          <span class="portal-footnote"
+            >DESIGN COM INTENÇÃO. TECNOLOGIA COM PROPÓSITO.</span
           >
-            <div class="work-art">
-              <div class="work-art-label">
-                <span>Sistema de gestão</span><span>01 / 04</span>
-              </div>
-              <a
-                class="work-preview"
-                href="https://projeto-jc-gamma.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor="Explorar ↗"
-                aria-label="Abrir Sistema de Manuais em uma nova aba"
+        </div>
+      </section>
+      <section class="work" id="projetos" aria-labelledby="work-title">
+        <div class="work-stage">
+          <div class="work-heading">
+            <div>
+              <span class="micro">03 / PROJETOS SELECIONADOS</span>
+              <h2 id="work-title">FEITO PARA<br /><em>O MUNDO REAL.</em></h2>
+            </div>
+            <div class="work-navigation">
+              <span class="work-counter"
+                ><b id="project-current">01</b> / 04</span
               >
-                <div class="browser-bar" aria-hidden="true">
-                  <span class="browser-dots">● ● ●</span
-                  ><span>projeto-jc-gamma.vercel.app</span><span>↗</span>
+              <div>
+                <button
+                  type="button"
+                  class="gallery-prev"
+                  aria-label="Projeto anterior"
+                  hidden
+                >
+                  ←</button
+                ><button
+                  type="button"
+                  class="gallery-next"
+                  aria-label="Próximo projeto"
+                  hidden
+                >
+                  →
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="gallery-viewport">
+            <div class="gallery-track">
+              <article
+                class="project-card"
+                id="case-01"
+                data-project="0"
+                aria-labelledby="project-title-01"
+              >
+                <a
+                  class="project-image"
+                  href="https://projeto-jc-gamma.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor="EXPLORAR"
+                  aria-label="Visitar Sistema de Manuais em uma nova aba"
+                  ><span class="project-image-label"
+                    ><span>Gestão de documentos</span><span>↗</span></span
+                  ><img
+                    src="assets/projects/sistema-manuais.webp"
+                    width="1440"
+                    height="800"
+                    alt="Página inicial de Sistema de Manuais"
+                    loading="lazy"
+                    decoding="async"
+                  /><span class="project-image-index" aria-hidden="true"
+                    >01</span
+                  ></a
+                >
+                <div class="project-caption">
+                  <div>
+                    <span class="micro">JCortiça / Artabas</span>
+                    <h3 id="project-title-01">Sistema de Manuais</h3>
+                  </div>
+                  <div class="project-actions">
+                    <button
+                      type="button"
+                      class="detail-button"
+                      data-details="0"
+                      aria-label="Ver detalhes de Sistema de Manuais"
+                      hidden
+                    >
+                      Sobre o projeto <span>+</span></button
+                    ><a
+                      href="https://projeto-jc-gamma.vercel.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Abrir Sistema de Manuais em uma nova aba"
+                      >Visitar <span aria-hidden="true">↗</span></a
+                    >
+                  </div>
                 </div>
-                <img
-                  src="assets/projects/sistema-manuais.webp"
-                  width="1440"
-                  height="694"
-                  alt="Página inicial de Sistema de Manuais"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </a>
-              <span class="work-art-caption" aria-hidden="true"
-                >DESIGN COM INTENÇÃO. CÓDIGO COM PROPÓSITO.</span
+              </article>
+              <article
+                class="project-card"
+                id="case-02"
+                data-project="1"
+                aria-labelledby="project-title-02"
               >
-            </div>
-            <div class="work-copy">
-              <div class="work-meta">
-                <span>JCORTIÇA / ARTABAS</span
-                ><span class="status"><i></i> ONLINE</span>
-              </div>
-              <h3 id="title-01">Sistema de Manuais</h3>
-              <p>
-                Plataforma empresarial desenvolvida para centralizar, organizar
-                e disponibilizar manuais e projetos técnicos de painéis
-                elétricos.
-              </p>
-              <div class="tags" aria-label="Tecnologias utilizadas">
-                <span>Next.js</span><span>Node.js</span><span>PostgreSQL</span
-                ><span>JWT</span><span>Cloudflare R2</span>
-              </div>
-              <a
-                class="project-link"
-                href="https://projeto-jc-gamma.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visitar Sistema de Manuais em uma nova aba"
-                ><span>Explorar projeto</span
-                ><span aria-hidden="true">↗</span></a
+                <a
+                  class="project-image"
+                  href="https://tf-solucoes-avicolas.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor="EXPLORAR"
+                  aria-label="Visitar TF Soluções Avícolas em uma nova aba"
+                  ><span class="project-image-label"
+                    ><span>Indústria avícola</span><span>↗</span></span
+                  ><img
+                    src="assets/projects/homeTf.webp"
+                    width="1440"
+                    height="800"
+                    alt="Página inicial de TF Soluções Avícolas"
+                    loading="lazy"
+                    decoding="async"
+                  /><span class="project-image-index" aria-hidden="true"
+                    >02</span
+                  ></a
+                >
+                <div class="project-caption">
+                  <div>
+                    <span class="micro">TF Soluções Avícolas</span>
+                    <h3 id="project-title-02">TF Soluções Avícolas</h3>
+                  </div>
+                  <div class="project-actions">
+                    <button
+                      type="button"
+                      class="detail-button"
+                      data-details="1"
+                      aria-label="Ver detalhes de TF Soluções Avícolas"
+                      hidden
+                    >
+                      Sobre o projeto <span>+</span></button
+                    ><a
+                      href="https://tf-solucoes-avicolas.vercel.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Abrir TF Soluções Avícolas em uma nova aba"
+                      >Visitar <span aria-hidden="true">↗</span></a
+                    >
+                  </div>
+                </div>
+              </article>
+              <article
+                class="project-card"
+                id="case-03"
+                data-project="2"
+                aria-labelledby="project-title-03"
               >
+                <a
+                  class="project-image"
+                  href="https://feito-a-mao-one.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor="EXPLORAR"
+                  aria-label="Visitar Feito a Mão em uma nova aba"
+                  ><span class="project-image-label"
+                    ><span>Marcenaria & design</span><span>↗</span></span
+                  ><img
+                    src="assets/projects/feito-mao.webp"
+                    width="1440"
+                    height="800"
+                    alt="Página inicial de Feito a Mão"
+                    loading="lazy"
+                    decoding="async"
+                  /><span class="project-image-index" aria-hidden="true"
+                    >03</span
+                  ></a
+                >
+                <div class="project-caption">
+                  <div>
+                    <span class="micro">Feito a Mão</span>
+                    <h3 id="project-title-03">Feito a Mão</h3>
+                  </div>
+                  <div class="project-actions">
+                    <button
+                      type="button"
+                      class="detail-button"
+                      data-details="2"
+                      aria-label="Ver detalhes de Feito a Mão"
+                      hidden
+                    >
+                      Sobre o projeto <span>+</span></button
+                    ><a
+                      href="https://feito-a-mao-one.vercel.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Abrir Feito a Mão em uma nova aba"
+                      >Visitar <span aria-hidden="true">↗</span></a
+                    >
+                  </div>
+                </div>
+              </article>
+              <article
+                class="project-card"
+                id="case-04"
+                data-project="3"
+                aria-labelledby="project-title-04"
+              >
+                <a
+                  class="project-image"
+                  href="https://barbershop-du-cortes.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor="EXPLORAR"
+                  aria-label="Visitar Barbershop Du Cortes em uma nova aba"
+                  ><span class="project-image-label"
+                    ><span>Agendamento & gestão</span><span>↗</span></span
+                  ><img
+                    src="assets/projects/barbearia.webp"
+                    width="1440"
+                    height="800"
+                    alt="Página inicial de Barbershop Du Cortes"
+                    loading="lazy"
+                    decoding="async"
+                  /><span class="project-image-index" aria-hidden="true"
+                    >04</span
+                  ></a
+                >
+                <div class="project-caption">
+                  <div>
+                    <span class="micro">Barbershop Du Cortes</span>
+                    <h3 id="project-title-04">Barbershop Du Cortes</h3>
+                  </div>
+                  <div class="project-actions">
+                    <button
+                      type="button"
+                      class="detail-button"
+                      data-details="3"
+                      aria-label="Ver detalhes de Barbershop Du Cortes"
+                      hidden
+                    >
+                      Sobre o projeto <span>+</span></button
+                    ><a
+                      href="https://barbershop-du-cortes.vercel.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Abrir Barbershop Du Cortes em uma nova aba"
+                      >Visitar <span aria-hidden="true">↗</span></a
+                    >
+                  </div>
+                </div>
+              </article>
             </div>
+          </div>
+          <div class="work-footer">
+            <span>PROJETOS REAIS. POSSIBILIDADES REAIS.</span
+            ><span class="gallery-hint">ROLE PARA CONHECER OS PROJETOS ↓</span>
+          </div>
+        </div>
+      </section>
+      <section class="studio section" id="sobre" aria-labelledby="studio-title">
+        <div class="section-label reveal">
+          <span>04 / O ESTÚDIO</span><span>BASTOS, SÃO PAULO</span>
+        </div>
+        <div class="studio-top">
+          <h2 id="studio-title" class="split-reveal">
+            BOAS IDEIAS.<br /><em>EXECUÇÃO<br />À ALTURA.</em>
+          </h2>
+          <div class="studio-copy reveal">
+            <span class="studio-star" aria-hidden="true"
+              ><svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                <path
+                  d="M50 0v100M0 50h100M15 15l70 70M15 85l70-70"
+                  stroke="currentColor"
+                  stroke-width="5"
+                /></svg
+            ></span>
+            <p class="lead">
+              Somos a EWS TECH.<br />Um estúdio independente que aproxima
+              negócios das possibilidades da tecnologia.
+            </p>
+            <p>
+              Do primeiro conceito ao projeto no ar, você conversa com quem faz.
+              Cada detalhe nasce do entendimento da sua operação, da sua marca e
+              das pessoas que vão usar a solução.
+            </p>
+            <a href="#contato" class="text-link"
+              >Conheça o que podemos criar juntos <span>↗</span></a
+            >
+          </div>
+        </div>
+        <div class="studio-facts">
+          <div class="fact reveal">
+            <span class="fact-value" data-count="4">04</span
+            ><span
+              >PROJETOS PUBLICADOS<br />Sites e sistemas em funcionamento.</span
+            >
+          </div>
+          <div class="fact reveal">
+            <span class="fact-value" data-count="3">03</span
+            ><span>FRENTES DE CRIAÇÃO<br />Sites, aplicativos e sistemas.</span>
+          </div>
+          <div class="fact reveal">
+            <span class="fact-value">01</span
+            ><span>PARCERIA DO INÍCIO AO FIM<br />Da conversa à entrega.</span>
+          </div>
+        </div>
+        <div class="process-heading reveal">
+          <span class="micro">COMO A IDEIA GANHA VIDA</span>
+          <h3>Cada etapa.<br /><em>Um propósito.</em></h3>
+        </div>
+        <div class="process-grid">
+          <article class="process-step reveal">
+            <span>01 / ENTENDER</span>
+            <h4>Primeiro,<br />o seu negócio.</h4>
+            <p>
+              Conversamos sobre seus objetivos, público e desafios para definir
+              o que faz sentido construir.
+            </p>
           </article>
-          <article
-            class="work-card work-avicola"
-            id="case-02"
-            aria-labelledby="title-02"
-            style="--order: 02"
-          >
-            <div class="work-art">
-              <div class="work-art-label">
-                <span>Site institucional</span><span>02 / 04</span>
-              </div>
-              <a
-                class="work-preview"
-                href="https://tf-solucoes-avicolas.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor="Explorar ↗"
-                aria-label="Abrir TF Soluções Avícolas em uma nova aba"
-              >
-                <div class="browser-bar" aria-hidden="true">
-                  <span class="browser-dots">● ● ●</span
-                  ><span>tf-solucoes-avicolas.vercel.app</span><span>↗</span>
-                </div>
-                <img
-                  src="assets/projects/homeTf.webp"
-                  width="1440"
-                  height="688"
-                  alt="Página inicial de TF Soluções Avícolas"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </a>
-              <span class="work-art-caption" aria-hidden="true"
-                >DESIGN COM INTENÇÃO. CÓDIGO COM PROPÓSITO.</span
-              >
-            </div>
-            <div class="work-copy">
-              <div class="work-meta">
-                <span>TF SOLUÇÕES AVÍCOLAS</span
-                ><span class="status"><i></i> ONLINE</span>
-              </div>
-              <h3 id="title-02">TF Soluções Avícolas</h3>
-              <p>
-                Site desenvolvido para apresentar as soluções e equipamentos da
-                TF Soluções Avícolas, valorizando seus produtos e facilitando o
-                contato de clientes para solicitação de orçamentos.
-              </p>
-              <div class="tags" aria-label="Tecnologias utilizadas">
-                <span>Next.js</span><span>React</span><span>Css</span
-                ><span>Vercel</span>
-              </div>
-              <a
-                class="project-link"
-                href="https://tf-solucoes-avicolas.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visitar TF Soluções Avícolas em uma nova aba"
-                ><span>Explorar projeto</span
-                ><span aria-hidden="true">↗</span></a
-              >
-            </div>
+          <article class="process-step reveal">
+            <span>02 / DESENHAR</span>
+            <h4>A ideia ganha<br />forma.</h4>
+            <p>
+              Organizamos a experiência, a identidade visual e os caminhos que
+              as pessoas vão percorrer.
+            </p>
           </article>
-          <article
-            class="work-card work-artesanal"
-            id="case-03"
-            aria-labelledby="title-03"
-            style="--order: 03"
-          >
-            <div class="work-art">
-              <div class="work-art-label">
-                <span>Experiência digital</span><span>03 / 04</span>
-              </div>
-              <a
-                class="work-preview"
-                href="https://feito-a-mao-one.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor="Explorar ↗"
-                aria-label="Abrir Feito a Mão em uma nova aba"
-              >
-                <div class="browser-bar" aria-hidden="true">
-                  <span class="browser-dots">● ● ●</span
-                  ><span>feito-a-mao-one.vercel.app</span><span>↗</span>
-                </div>
-                <img
-                  src="assets/projects/feito-mao.webp"
-                  width="1440"
-                  height="691"
-                  alt="Página inicial de Feito a Mão"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </a>
-              <span class="work-art-caption" aria-hidden="true"
-                >DESIGN COM INTENÇÃO. CÓDIGO COM PROPÓSITO.</span
-              >
-            </div>
-            <div class="work-copy">
-              <div class="work-meta">
-                <span>FEITO A MÃO</span
-                ><span class="status"><i></i> ONLINE</span>
-              </div>
-              <h3 id="title-03">Feito a Mão</h3>
-              <p>
-                Site institucional desenvolvido para a Feito à Mão, destacando
-                serviços de marcenaria, serralheria, restauração e projetos
-                personalizados. O projeto valoriza o processo artesanal por meio
-                de uma experiência visual moderna, interativa e responsiva, além
-                de facilitar o contato para solicitação de orçamentos.
-              </p>
-              <div class="tags" aria-label="Tecnologias utilizadas">
-                <span>Next.js</span><span>React</span><span>JavaScript</span
-                ><span>CSS</span><span>Responsive Design</span>
-              </div>
-              <a
-                class="project-link"
-                href="https://feito-a-mao-one.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visitar Feito a Mão em uma nova aba"
-                ><span>Explorar projeto</span
-                ><span aria-hidden="true">↗</span></a
-              >
-            </div>
+          <article class="process-step reveal">
+            <span>03 / CONSTRUIR</span>
+            <h4>Design encontra<br />tecnologia.</h4>
+            <p>
+              Desenvolvemos, testamos e refinamos a solução com atenção à
+              experiência em cada tela.
+            </p>
           </article>
-          <article
-            class="work-card work-barbearia"
-            id="case-04"
-            aria-labelledby="title-04"
-            style="--order: 04"
-          >
-            <div class="work-art">
-              <div class="work-art-label">
-                <span>Agendamento &amp; gestão</span><span>04 / 04</span>
-              </div>
-              <a
-                class="work-preview"
-                href="https://barbershop-du-cortes.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor="Explorar ↗"
-                aria-label="Abrir Barbershop Du Cortes em uma nova aba"
-              >
-                <div class="browser-bar" aria-hidden="true">
-                  <span class="browser-dots">● ● ●</span
-                  ><span>barbershop-du-cortes.vercel.app</span><span>↗</span>
-                </div>
-                <img
-                  src="assets/projects/barbearia.webp"
-                  width="1440"
-                  height="809"
-                  alt="Página inicial de Barbershop Du Cortes"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </a>
-              <span class="work-art-caption" aria-hidden="true"
-                >DESIGN COM INTENÇÃO. CÓDIGO COM PROPÓSITO.</span
-              >
-            </div>
-            <div class="work-copy">
-              <div class="work-meta">
-                <span>BARBERSHOP DU CORTES</span
-                ><span class="status"><i></i> ONLINE</span>
-              </div>
-              <h3 id="title-04">Barbershop Du Cortes</h3>
-              <p>
-                Sistema de agendamento e gestão desenvolvido para a Barbershop
-                Du Cortes. Permite aos clientes reservar horários, acompanhar
-                agendamentos e receber confirmações por e-mail. Conta com painel
-                administrativo para gerenciar serviços, agenda, pagamentos e
-                despesas, além de dashboards e relatórios para acompanhar os
-                resultados da barbearia, em uma interface responsiva.
-              </p>
-              <div class="tags" aria-label="Tecnologias utilizadas">
-                <span>Next.js</span><span>React</span><span>JavaScript</span
-                ><span>Node.js</span><span>Express</span><span>PostgreSQL</span
-                ><span>CSS</span><span>Responsive Design</span>
-              </div>
-              <a
-                class="project-link"
-                href="https://barbershop-du-cortes.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visitar Barbershop Du Cortes em uma nova aba"
-                ><span>Explorar projeto</span
-                ><span aria-hidden="true">↗</span></a
-              >
-            </div>
+          <article class="process-step reveal">
+            <span>04 / LANÇAR</span>
+            <h4>Pronto para<br />o próximo passo.</h4>
+            <p>
+              Preparamos a publicação e orientamos você para usar a solução no
+              dia a dia.
+            </p>
           </article>
         </div>
         <div class="other-work reveal">
-          <h3>Também criamos</h3>
-          <div>
-            <span>Oficina Mecânica</span><span>E-commerce</span
-            ><span>PDV Supermercado</span><span>Imobiliária</span>
-          </div>
+          <span class="micro">OUTRAS EXPLORAÇÕES</span>
+          <p>
+            Oficina Mecânica <span>↗</span> E-commerce <span>↗</span> PDV
+            Supermercado <span>↗</span> Imobiliária
+          </p>
         </div>
       </section>
       <div class="marquee" aria-hidden="true">
         <div class="marquee-track">
-          <span>DESIGN</span><i>✳</i><span>TECNOLOGIA</span><i>✳</i
-          ><span>IMPACTO</span><i>✳</i><span>DESIGN</span><i>✳</i
-          ><span>TECNOLOGIA</span><i>✳</i><span>IMPACTO</span><i>✳</i>
+          SUA IDEIA. <span>✳</span> NOSSA TECNOLOGIA. <span>✳</span> SUA IDEIA.
+          <span>✳</span> NOSSA TECNOLOGIA. <span>✳</span>
         </div>
       </div>
-      <section
-        class="services section"
-        id="solucoes"
-        aria-labelledby="services-title"
-      >
-        <div class="services-intro reveal">
-          <div class="section-label">03 / O QUE FAZEMOS</div>
-          <h2 id="services-title">
-            Bonito por fora.<br /><em>Inteligente<br />por dentro.</em>
-          </h2>
-          <p>
-            Da primeira ideia ao último detalhe.<br />Tecnologia pensada para o
-            seu negócio.
-          </p>
-          <a class="text-link" href="#contato"
-            >Encontre sua solução <span aria-hidden="true">↗</span></a
-          >
-        </div>
-        <div class="service-list">
-          <article class="service reveal">
-            <span class="service-number">01</span>
-            <div>
-              <h3>Sites & experiências</h3>
-              <p>
-                Presença digital com personalidade, navegação intuitiva e foco
-                em transformar visitantes em clientes.
-              </p>
-              <div class="service-tags">
-                <span>Institucionais</span><span>Landing pages</span
-                ><span>Catálogos</span>
-              </div>
-            </div>
-            <span class="service-icon" aria-hidden="true">↗</span>
-          </article>
-          <article class="service reveal">
-            <span class="service-number">02</span>
-            <div>
-              <h3>Aplicativos</h3>
-              <p>
-                Seu negócio mais perto das pessoas. Experiências simples e
-                fluidas, na palma da mão.
-              </p>
-              <div class="service-tags">
-                <span>Android & iOS</span><span>Experiência mobile</span>
-              </div>
-            </div>
-            <span class="service-icon" aria-hidden="true">↗</span>
-          </article>
-          <article class="service reveal">
-            <span class="service-number">03</span>
-            <div>
-              <h3>Sistemas de gestão</h3>
-              <p>
-                Menos planilhas espalhadas. Mais controle sobre sua operação,
-                seus dados e suas decisões.
-              </p>
-              <div class="service-tags">
-                <span>Dashboards</span><span>Agendamentos</span
-                ><span>Relatórios</span>
-              </div>
-            </div>
-            <span class="service-icon" aria-hidden="true">↗</span>
-          </article>
-          <article class="service reveal">
-            <span class="service-number">04</span>
-            <div>
-              <h3>Automações & integrações</h3>
-              <p>
-                Conectamos ferramentas e simplificamos tarefas para sua equipe
-                dedicar tempo ao que importa.
-              </p>
-              <div class="service-tags">
-                <span>APIs</span><span>Fluxos de trabalho</span>
-              </div>
-            </div>
-            <span class="service-icon" aria-hidden="true">↗</span>
-          </article>
-        </div>
-      </section>
-      <section class="about section" id="sobre" aria-labelledby="about-title">
-        <div class="section-label reveal">
-          <span>04 / POR TRÁS DA TECNOLOGIA</span
-          ><span>FEITO COM INTENÇÃO</span>
-        </div>
-        <div class="about-layout">
-          <h2 id="about-title" class="reveal">
-            De Bastos.<br />Para onde<br /><em>sua ideia for.</em>
-          </h2>
-          <div class="about-copy reveal">
-            <span class="about-star" aria-hidden="true">✳</span>
-            <p class="about-lead">
-              Somos a EWS TECH.<br />Acreditamos no poder de uma boa ideia — e
-              de uma execução à altura.
-            </p>
-            <p>
-              Criamos soluções digitais com atenção ao seu negócio, às pessoas
-              que vão usar e ao resultado que você quer alcançar. Você acompanha
-              cada etapa. A gente conecta os pontos.
-            </p>
-            <div class="process">
-              <span><b>01</b> Entender</span><span><b>02</b> Desenhar</span
-              ><span><b>03</b> Construir</span><span><b>04</b> Lançar</span>
-            </div>
-          </div>
-        </div>
-      </section>
       <section
         class="contact section"
         id="contato"
         aria-labelledby="contact-title"
       >
-        <div class="contact-orb" aria-hidden="true"></div>
+        <div class="contact-glow" aria-hidden="true"></div>
         <div class="section-label reveal">
           <span>O PRÓXIMO PROJETO PODE SER O SEU.</span
-          ><span aria-hidden="true">↙</span>
+          ><span>05 / VAMOS CONVERSAR</span>
         </div>
-        <div class="contact-content">
-          <h2 id="contact-title" class="reveal">
-            Vamos criar<br /><em>algo incrível<span>?</span></em>
-          </h2>
-          <div class="contact-bottom reveal">
-            <p>Conte sua ideia.<br />A primeira conversa é o começo de tudo.</p>
-            <div class="contact-actions">
-              <a
-                class="button button-whatsapp"
-                href="https://wa.me/5514998277583?text=Ol%C3%A1%2C%20EWS%20TECH!%20Quero%20conversar%20sobre%20um%20projeto."
-                target="_blank"
-                rel="noopener noreferrer"
-                ><svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M20.5 11.7a8.5 8.5 0 0 1-12.7 7.4L3 20.5l1.3-4.6a8.5 8.5 0 1 1 16.2-4.2Z"
-                  />
-                  <path
-                    d="M8.2 7.5c-.6 0-1 1.1-.9 1.7.5 3.1 3 5.5 6 6.2.8.2 2-.6 2-1.2l-2.1-1.1-.9 1c-1.7-.8-2.8-1.9-3.5-3.5l1-.8-1.1-2.3h-.5Z"
-                  /></svg
-                ><span>Conversar no WhatsApp</span
-                ><span aria-hidden="true">↗</span></a
-              ><a
-                class="button button-instagram"
-                href="https://www.instagram.com/ews_tec/"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Instagram <span aria-hidden="true">↗</span></a
+        <h2 id="contact-title" class="split-reveal">
+          VAMOS CRIAR<br />ALGO <em>MEMORÁVEL<span>?</span></em>
+        </h2>
+        <div class="contact-bottom reveal">
+          <p>Conte sua ideia.<br />Vamos descobrir até onde ela pode chegar.</p>
+          <div class="contact-actions">
+            <a
+              class="button button-blue magnetic"
+              href="https://wa.me/5514998277583?text=Ol%C3%A1%2C%20EWS%20TECH!%20Quero%20conversar%20sobre%20um%20projeto."
+              target="_blank"
+              rel="noopener noreferrer"
+              ><svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                aria-hidden="true"
               >
-            </div>
+                <path
+                  d="M20.5 11.7a8.5 8.5 0 0 1-12.7 7.4L3 20.5l1.3-4.6a8.5 8.5 0 1 1 16.2-4.2Z"
+                />
+                <path
+                  d="M8.2 7.5c-.6 0-1 1.1-.9 1.7.5 3.1 3 5.5 6 6.2.8.2 2-.6 2-1.2l-2.1-1.1-.9 1c-1.7-.8-2.8-1.9-3.5-3.5l1-.8-1.1-2.3h-.5Z"
+                /></svg
+              ><span>Conversar no WhatsApp</span><span>↗</span></a
+            ><a
+              class="button button-outline magnetic"
+              href="https://www.instagram.com/ews_tec/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Instagram <span>↗</span></a
+            >
           </div>
         </div>
       </section>
     </main>
     <footer>
       <div class="footer-top">
-        <a
-          class="brand"
-          href="#inicio"
-          aria-label="Voltar ao início da EWS TECH"
-          ><span class="brand-symbol" aria-hidden="true">≋</span
-          ><span>EWS<span class="brand-tech">TECH</span></span></a
+        <a class="brand" href="#inicio" aria-label="EWS TECH, voltar ao início"
+          ><span class="brand-icon"
+            ><svg viewBox="0 0 56 50" fill="none" aria-hidden="true">
+              <path
+                d="M17 7h32l-5 8H12zm-5 14h32l-5 8H7zM7 35h32l-5 8H2z"
+                fill="currentColor"
+              /></svg></span
+          ><span class="brand-name">EWS<span>TECH</span></span></a
         >
-        <p>Ideias sem limites. Tecnologia sob medida.</p>
-        <a href="#inicio" class="back-top">Voltar ao topo ↑</a>
+        <p>ESTÚDIO DIGITAL. IDEIAS SEM LIMITES.</p>
+        <a class="back-top" href="#inicio">VOLTAR AO TOPO ↑</a>
       </div>
-      <div class="footer-wordmark" aria-hidden="true">
-        EWS TECH<span>✳</span>
+      <div class="footer-mark" aria-hidden="true">
+        <span>E</span><span>W</span><span>S</span><span>TECH</span>
       </div>
       <div class="footer-bottom">
         <span>© <span id="year">2026</span> EWS TECH</span
-        ><span>BASTOS, SÃO PAULO · BRASIL</span
-        ><a
-          href="https://wa.me/5514998277583?text=Ol%C3%A1%2C%20EWS%20TECH!%20Quero%20conversar%20sobre%20um%20projeto."
-          target="_blank"
-          rel="noopener noreferrer"
-          >Vamos conversar ↗</a
-        >
+        ><button id="sound-toggle" type="button" aria-pressed="false" hidden>
+          <span class="sound-bars" aria-hidden="true"
+            ><i></i><i></i><i></i><i></i
+          ></span>
+          SOM <span class="sound-state">DESLIGADO</span></button
+        ><span>BASTOS, SP — BRASIL</span>
       </div>
     </footer>
+    <dialog
+      id="project-dialog"
+      class="project-dialog"
+      aria-labelledby="project-dialog-title"
+    >
+      <button
+        type="button"
+        class="close-project"
+        aria-label="Fechar detalhes do projeto"
+      >
+        FECHAR <span>×</span>
+      </button>
+      <div class="project-dialog-body"></div>
+    </dialog>
+    <template id="project-template-0"
+      ><div class="detail-image">
+        <img
+          src="assets/projects/sistema-manuais.webp"
+          alt="Página inicial de Sistema de Manuais"
+          width="1440"
+          height="800"
+        />
+      </div>
+      <div class="detail-copy">
+        <span class="micro">Gestão de documentos / JCortiça / Artabas</span>
+        <h2>Sistema de Manuais</h2>
+        <p>
+          Plataforma empresarial desenvolvida para centralizar, organizar e
+          disponibilizar manuais e projetos técnicos de painéis elétricos.
+        </p>
+        <div class="tags">
+          <span>Next.js</span><span>Node.js</span><span>PostgreSQL</span
+          ><span>JWT</span><span>Cloudflare R2</span>
+        </div>
+        <a
+          class="button button-blue"
+          href="https://projeto-jc-gamma.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Visitar projeto <span aria-hidden="true">↗</span></a
+        >
+      </div></template
+    ><template id="project-template-1"
+      ><div class="detail-image">
+        <img
+          src="assets/projects/homeTf.webp"
+          alt="Página inicial de TF Soluções Avícolas"
+          width="1440"
+          height="800"
+        />
+      </div>
+      <div class="detail-copy">
+        <span class="micro">Indústria avícola / TF Soluções Avícolas</span>
+        <h2>TF Soluções Avícolas</h2>
+        <p>
+          Site desenvolvido para apresentar as soluções e equipamentos da TF
+          Soluções Avícolas, valorizando seus produtos e facilitando o contato
+          de clientes para solicitação de orçamentos.
+        </p>
+        <div class="tags">
+          <span>Next.js</span><span>React</span><span>Css</span
+          ><span>Vercel</span>
+        </div>
+        <a
+          class="button button-blue"
+          href="https://tf-solucoes-avicolas.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Visitar projeto <span aria-hidden="true">↗</span></a
+        >
+      </div></template
+    ><template id="project-template-2"
+      ><div class="detail-image">
+        <img
+          src="assets/projects/feito-mao.webp"
+          alt="Página inicial de Feito a Mão"
+          width="1440"
+          height="800"
+        />
+      </div>
+      <div class="detail-copy">
+        <span class="micro">Marcenaria & design / Feito a Mão</span>
+        <h2>Feito a Mão</h2>
+        <p>
+          Site institucional desenvolvido para a Feito à Mão, destacando
+          serviços de marcenaria, serralheria, restauração e projetos
+          personalizados. O projeto valoriza o processo artesanal por meio de
+          uma experiência visual moderna, interativa e responsiva, além de
+          facilitar o contato para solicitação de orçamentos.
+        </p>
+        <div class="tags">
+          <span>Next.js</span><span>React</span><span>JavaScript</span
+          ><span>CSS</span><span>Responsive Design</span>
+        </div>
+        <a
+          class="button button-blue"
+          href="https://feito-a-mao-one.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Visitar projeto <span aria-hidden="true">↗</span></a
+        >
+      </div></template
+    ><template id="project-template-3"
+      ><div class="detail-image">
+        <img
+          src="assets/projects/barbearia.webp"
+          alt="Página inicial de Barbershop Du Cortes"
+          width="1440"
+          height="800"
+        />
+      </div>
+      <div class="detail-copy">
+        <span class="micro">Agendamento & gestão / Barbershop Du Cortes</span>
+        <h2>Barbershop Du Cortes</h2>
+        <p>
+          Sistema de agendamento e gestão desenvolvido para a Barbershop Du
+          Cortes. Permite aos clientes reservar horários, acompanhar
+          agendamentos e receber confirmações por e-mail. Conta com painel
+          administrativo para gerenciar serviços, agenda, pagamentos e despesas,
+          além de dashboards e relatórios para acompanhar os resultados da
+          barbearia, em uma interface responsiva.
+        </p>
+        <div class="tags">
+          <span>Next.js</span><span>React</span><span>JavaScript</span
+          ><span>Node.js</span><span>Express</span><span>PostgreSQL</span
+          ><span>CSS</span><span>Responsive Design</span>
+        </div>
+        <a
+          class="button button-blue"
+          href="https://barbershop-du-cortes.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Visitar projeto <span aria-hidden="true">↗</span></a
+        >
+      </div></template
+    >
   </body>
 </html>

@@ -1,63 +1,90 @@
-# EWS TECH — Experiência de scroll
+# EWS TECH — Experiência imersiva
 
-Site completo em HTML, CSS e JavaScript puro. Sem instalação, build, bibliotecas de animação ou serviços externos obrigatórios. Abra `index.html` no navegador ou use o Live Server do VS Code.
+Redesign do portfólio da EWS TECH, com a linguagem de movimento da nova referência adaptada à marca: azul, tipografia ampla, escultura original em 3D, projetos reais e contato direto. Esta entrega não contém vídeo.
 
-## O que mudou
+O site está pronto em **HTML, CSS e JavaScript**, com as fontes, imagens e a biblioteca 3D hospedadas localmente. **Não precisa instalar dependências ou executar build para publicar.** Abra `index.html` ou use um servidor estático/Live Server para conferir.
 
-- Nova direção visual com tipografia grande, tons escuros, azul elétrico e uma seção clara sobre a EWS.
-- Abertura com profundidade: a escultura acompanha o ponteiro e se transforma com a rolagem.
-- Texto que se ilumina palavra por palavra, com transição gradual do fundo para azul.
-- Galeria com os quatro projetos originais: cartões que se sobrepõem e recuam durante a rolagem em computadores com altura suficiente.
-- Faixa tipográfica que se desloca com o scroll, entradas de conteúdo e cursor contextual nos previews.
-- WhatsApp ao lado do Instagram, usando o número confirmado: **(14) 99827-7583**.
-- Menu mobile, acesso por teclado e adaptação automática para `prefers-reduced-motion`.
+## Experiência
 
-A rolagem continua sendo a nativa do navegador. Os efeitos não interceptam a roda do mouse nem os gestos de toque. Em telas pequenas ou baixas, os projetos voltam à sequência vertical para manter todo o conteúdo acessível. Sem JavaScript, os conteúdos e links continuam disponíveis.
+- Entrada curta com o logotipo e transição de tela. Ela não bloqueia o acesso ao conteúdo.
+- Escultura metálica original em Three.js, com rotação, resposta ao ponteiro e transformação ligada ao scroll. O render pausa fora da área visível e em abas em segundo plano.
+- Títulos com revelação, deslocamento e desfoque; texto que se ilumina palavra por palavra.
+- Quatro cenas de serviços em uma seção fixa no desktop, com mockups em perspectiva e revelação por máscara.
+- Um círculo azul se expande e ocupa a tela, acompanhado pela transformação do símbolo EWS.
+- Galeria horizontal dos quatro projetos, guiada pela rolagem no desktop. No celular, deslize ou use as setas.
+- Detalhes de cada projeto em um modal com descrição, tecnologias e link para o site.
+- Menu em tela cheia, cursor contextual, rastro discreto do ponteiro, botões com deslocamento suave e faixa tipográfica em movimento.
+- Tipografia animada no rodapé e som ambiente original opcional, desligado por padrão.
+- WhatsApp ao lado do Instagram.
 
-## Arquivos
+A referência orienta os tipos de movimento; o código, a escultura e os elementos gráficos desta versão foram construídos para a EWS. Modelos, textos e arquivos do site de referência não foram incorporados.
 
-- `index.html`: seções, projetos e contatos.
-- `style.css`: layout, cores, efeitos e responsividade.
-- `script.js`: menu e animações ligadas à rolagem.
-- `favicon.svg`: ícone da marca.
-- `assets/hero.webp`: escultura azul otimizada.
-- `assets/projects/`: imagens dos quatro projetos.
+## Celular, teclado e movimento reduzido
 
-As fontes são do sistema. As imagens são locais, em WebP. Não há dependência de CDN para carregar o site ou executar os efeitos.
+A rolagem é nativa: não interceptamos a roda do mouse nem os gestos de toque. As cenas fixas e a galeria guiada por scroll funcionam a partir de 900 px de largura e 760 px de altura. Em telas menores ou baixas, os serviços ficam em sequência; os projetos usam uma galeria por toque no celular ou uma grade em desktops baixos.
 
-## Contatos
+Os menus e detalhes usam diálogos nativos, com fechamento por Escape e retorno do foco. Os projetos podem ser percorridos pelo teclado. Ao ativar **reduzir movimento** no sistema, o conteúdo fica disponível sem as animações de rolagem e sem rotação contínua do 3D.
 
-O botão do WhatsApp abre `https://wa.me/5514998277583` com uma mensagem pronta. Para trocar o número, pesquise `5514998277583` em `index.html` e altere as duas ocorrências.
+Se WebGL não estiver disponível, a imagem local `assets/hero.webp` mantém a abertura visual. Sem JavaScript, os serviços, projetos, navegação e contatos permanecem acessíveis. As descrições expandidas dependem de JavaScript; os links diretos dos projetos continuam funcionando.
 
-O Instagram preserva o destino do site anterior: `https://www.instagram.com/ews_tec/`.
+## Estrutura
 
-## Projetos
+| Arquivo                                    | Função                                                |
+| ------------------------------------------ | ----------------------------------------------------- |
+| `index.html`                               | Conteúdo, projetos, templates dos detalhes e contatos |
+| `style.css`                                | Identidade visual, layouts e animações                |
+| `script.js`                                | Scroll, menu, galeria, diálogos e som opcional        |
+| `scene.js`                                 | Escultura 3D pronta para uso, incluindo Three.js      |
+| `source/scene.mjs`                         | Código editável da escultura                          |
+| `source/build.mjs` e `source/package.json` | Build opcional, apenas ao alterar o 3D                |
+| `assets/fonts/`                            | Barlow Condensed e Manrope locais                     |
+| `assets/projects/`                         | Imagens dos quatro projetos                           |
+| `assets/hero.webp`                         | Arte de abertura usada quando não há WebGL            |
+| `THIRD-PARTY-NOTICES.txt`                  | Licenças de Three.js e das fontes                     |
 
-Os quatro projetos publicados preservam suas URLs, descrições, imagens e tecnologias. Para adicionar outro, duplique um `article.work-card` e ajuste o ID, `aria-labelledby`, título, descrição, tecnologias, os dois links e a imagem. Ajuste também a contagem de projetos no cabeçalho e nos cartões.
-
-## Aplicar ao seu projeto
-
-1. Na pasta local de `EdwynWs/ews-tech`, execute `git pull` para obter a versão mais recente.
-2. Copie o conteúdo da pasta `ews-tech` deste ZIP para a raiz do projeto, substituindo os arquivos com o mesmo nome.
-3. Abra `index.html` para conferir a nova versão.
-4. Execute:
+Para alterar textos, cores, contatos e animações de scroll, edite os três arquivos principais. O build só é necessário ao editar `source/scene.mjs`:
 
 ```sh
-git add index.html style.css script.js favicon.svg assets README.md
-git commit -m "Redesenha EWS TECH com efeitos de scroll e contato por WhatsApp"
+npm --prefix source install
+npm --prefix source run build
+```
+
+Não publique a pasta `source/node_modules`. O arquivo `scene.js` resultante já inclui o necessário para o navegador.
+
+## Contatos e projetos
+
+WhatsApp: **(14) 99827-7583**, usando `https://wa.me/5514998277583` com mensagem pronta. Para alterar, substitua as duas ocorrências do número em `index.html`.
+
+Instagram: `https://www.instagram.com/ews_tec/`, preservado do site anterior.
+
+Os quatro projetos mantêm suas imagens, descrições, tecnologias e URLs:
+
+1. Sistema de Manuais — https://projeto-jc-gamma.vercel.app/
+2. TF Soluções Avícolas — https://tf-solucoes-avicolas.vercel.app/
+3. Feito a Mão — https://feito-a-mao-one.vercel.app/
+4. Barbershop Du Cortes — https://barbershop-du-cortes.vercel.app/
+
+Cada `article.project-card` corresponde a um `template` com o mesmo índice: `data-project="0"`, `data-details="0"` e `project-template-0`. Para adicionar trabalhos, duplique esse conjunto e atualize IDs, imagens, textos, links e as contagens visíveis. A galeria calcula a movimentação pelo número de cartões.
+
+## Aplicar ao repositório
+
+1. Na pasta local de `EdwynWs/ews-tech`, execute `git pull`.
+2. Copie o conteúdo da pasta `ews-tech` deste ZIP para a raiz do projeto, substituindo os arquivos correspondentes.
+3. Confira o site no navegador.
+4. Envie os arquivos:
+
+```sh
+git add index.html style.css script.js scene.js source favicon.svg assets README.md THIRD-PARTY-NOTICES.txt
+git commit -m "Adapta EWS TECH com experiencia imersiva e galeria de projetos"
 git push
 ```
 
-Se o Vercel estiver conectado à branch atualizada, o push iniciará um deploy. Não é necessário instalar dependências ou configurar um comando de build. Os antigos `projects.css` e `hero.png` deixam de ser usados; mantê-los na pasta não interfere na nova versão.
+Se o Vercel estiver conectado à branch atualizada, o push iniciará o deploy. O projeto segue estático e não precisa de comando de build. A pasta `source` existe somente para manutenção do 3D.
 
-## Validação realizada
+## Validação
 
-- Chromium: 1440×1000, 1366×768, 900×700, 768×1024, 390×844 e 320×740.
-- Sem rolagem horizontal nos tamanhos verificados.
-- Menu mobile abre, navega e fecha corretamente.
-- Todas as imagens carregam; WhatsApp e Instagram permanecem dentro da tela.
-- Nenhum erro de execução de JavaScript nos testes.
-- Conteúdo disponível sem JavaScript e com movimento reduzido.
-- Verificação de sintaxe de JavaScript e de diferenças do Git.
+Conferido em Chromium nos tamanhos 1440×1000, 1366×768, 900×700, 768×1024, 390×844 e 320×740. Foram verificados carregamento dos recursos, limites da tela, navegação, galeria, detalhes dos projetos, contatos, teclado, mudança de tamanho e modos sem JavaScript, sem WebGL e com movimento reduzido.
 
-Esta entrega contém os arquivos prontos. Nenhum deploy ou commit remoto foi realizado nesta conversa.
+O desempenho do 3D depende do aparelho e do navegador. Os testes locais não substituem uma medição no site publicado e em dispositivos físicos.
+
+Esta entrega atualiza os arquivos. **Nenhum push ou deploy remoto foi realizado.**
