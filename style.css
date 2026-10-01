@@ -1281,15 +1281,6 @@ button:focus-visible {
   right: 20px;
   bottom: 4px;
 }
-.project-card:nth-child(2) .project-image {
-  background: #122a24;
-}
-.project-card:nth-child(3) .project-image {
-  background: #372a20;
-}
-.project-card:nth-child(4) .project-image {
-  background: #291e33;
-}
 .project-caption {
   display: flex;
   justify-content: space-between;
@@ -1690,6 +1681,21 @@ footer {
   letter-spacing: 0.7px;
   color: #8292b0;
 }
+.sound-control {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 4px;
+}
+.music-credit {
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 0;
+  text-align: center;
+}
+.music-credit a:hover {
+  color: #bbd0ff;
+}
 #sound-toggle {
   border: 0;
   font-size: 8px;
@@ -2056,26 +2062,33 @@ footer {
   .hero-stage,
   .immersive .hero-stage {
     position: relative;
-    height: 100svh;
-    min-height: 760px;
-    max-height: 1100px;
+    height: auto;
+    min-height: 100svh;
+    max-height: none;
     padding-top: 112px;
+    justify-content: flex-start;
+    gap: 22px;
   }
   .hero h1 {
     font-size: 16.2vw;
-    padding-block: 35px;
+    padding-block: 8px;
+    transform: none !important;
+    opacity: 1 !important;
   }
   .hero-art {
-    width: 110%;
-    right: -32%;
-    top: 7%;
-    height: 75%;
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: clamp(240px, 36svh, 380px);
+    flex-shrink: 0;
+    overflow: hidden;
+    contain: paint;
   }
   .hero-top {
     font-size: 7px;
   }
   .hero-note {
-    padding-top: 95px;
+    padding-top: 0;
   }
   .hero-bottom p {
     font-size: 11px;
@@ -2321,10 +2334,11 @@ footer {
   }
   .hero-stage,
   .immersive .hero-stage {
-    min-height: 720px;
-    height: 96svh;
-    max-height: 900px;
-    padding-top: 108px;
+    min-height: 100svh;
+    height: auto;
+    max-height: none;
+    padding-top: 104px;
+    gap: 18px;
   }
   .hero-top {
     font-size: 6px;
@@ -2333,8 +2347,8 @@ footer {
     display: none;
   }
   .hero-note {
-    font-size: 6px;
-    padding-top: 130px;
+    font-size: 7px;
+    padding-top: 0;
     gap: 10px;
     line-height: 1.7;
   }
@@ -2344,13 +2358,10 @@ footer {
   .hero h1 {
     font-size: 18vw;
     line-height: 0.92;
-    padding: 30px 0 25px;
+    padding: 6px 0 12px;
   }
   .hero-art {
-    top: 45px;
-    width: 128%;
-    height: 58%;
-    right: -30%;
+    height: clamp(220px, 33svh, 310px);
   }
   .hero-bottom {
     gap: 20px;

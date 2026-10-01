@@ -473,48 +473,78 @@
     });
   });
 
-  // Original ambient tones, opt-in only. No audio download or autoplay.
+  // A local music file, downloaded only after the visitor opts in.
   const soundButton = $("#sound-toggle");
-  const AudioEngine = window.AudioContext || window.webkitAudioContext;
-  let audio;
-  let master;
-  let soundOn = false;
-  if (AudioEngine) {
-    soundButton.hidden = false;
-    soundButton.addEventListener("click", async () => {
-      try {
-        if (!audio) {
-          audio = new AudioEngine();
-          master = audio.createGain();
-          master.gain.value = 0;
-          master.connect(audio.destination);
-          [110, 164.81, 220].forEach((frequency, index) => {
-            const tone = audio.createOscillator();
-            const gain = audio.createGain();
-            tone.type = "sine";
-            tone.frequency.value = frequency;
-            gain.gain.value = 0.07 / (index + 1);
-            tone.connect(gain).connect(master);
-            tone.start();
-          });
-        }
-        soundOn = !soundOn;
-        if (soundOn) await audio.resume();
-        master.gain.setTargetAtTime(soundOn ? 0.4 : 0, audio.currentTime, 0.25);
-        soundButton.setAttribute("aria-pressed", String(soundOn));
-        soundButton.classList.toggle("sound-on", soundOn);
-        $(".sound-state").textContent = soundOn ? "LIGADO" : "DESLIGADO";
-      } catch {
-        soundOn = false;
-        soundButton.setAttribute("aria-pressed", "false");
-        $(".sound-state").textContent = "INDISPONÍVEL";
-        soundButton.disabled = true;
+  const music = $("#background-music");
+  const soundState = $(".sound-state");
+  let wantsMusic = false;
+  let playRequest = 0;
+  let fadeFrame = 0;
+
+  function showMusicState(label, playing = false) {
+    soundState.textContent = label;
+    soundButton.setAttribute("aria-pressed", String(wantsMusic));
+    soundButton.setAttribute(
+      "aria-label",
+      wantsMusic ? "Pausar música" : "Reproduzir música",
+    );
+    soundButton.classList.toggle("sound-on", playing);
+  }
+  function stopMusic() {
+    wantsMusic = false;
+    playRequest++;
+    cancelAnimationFrame(fadeFrame);
+    music.pause();
+    showMusicState("DESLIGADA");
+  }
+  async function startMusic() {
+    const request = ++playRequest;
+    cancelAnimationFrame(fadeFrame);
+    showMusicState("CARREGANDO");
+    music.volume = 0;
+    try {
+      if (music.error) music.load();
+      await music.play();
+      if (request !== playRequest || !wantsMusic || document.hidden) {
+        if (!wantsMusic || document.hidden) music.pause();
+        return;
+      }
+      showMusicState("LIGADA", true);
+      const start = performance.now();
+      function fadeIn(now) {
+        if (!wantsMusic || document.hidden || request !== playRequest) return;
+        const progress = clamp((now - start) / 900);
+        music.volume = 0.22 * progress;
+        if (progress < 1) fadeFrame = requestAnimationFrame(fadeIn);
+      }
+      fadeFrame = requestAnimationFrame(fadeIn);
+    } catch {
+      if (request !== playRequest || !wantsMusic || document.hidden) return;
+      wantsMusic = false;
+      showMusicState("TENTAR NOVAMENTE");
+    }
+  }
+  if (music && typeof music.play === "function") {
+    $(".sound-control").hidden = false;
+    soundButton.addEventListener("click", () => {
+      if (wantsMusic) stopMusic();
+      else {
+        wantsMusic = true;
+        startMusic();
       }
     });
-    document.addEventListener("visibilitychange", () => {
-      if (!audio) return;
-      if (document.hidden) audio.suspend().catch(() => {});
-      else if (soundOn) audio.resume().catch(() => {});
+    music.addEventListener("error", () => {
+      stopMusic();
+      showMusicState("TENTAR NOVAMENTE");
     });
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        playRequest++;
+        cancelAnimationFrame(fadeFrame);
+        music.pause();
+        if (wantsMusic) showMusicState("PAUSADA");
+      } else if (wantsMusic) startMusic();
+    });
+    addEventListener("pagehide", stopMusic);
   }
 })();

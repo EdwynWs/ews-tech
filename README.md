@@ -14,12 +14,14 @@ O site está pronto em **HTML, CSS e JavaScript**, com as fontes, imagens e a bi
 - Galeria horizontal dos quatro projetos, guiada pela rolagem no desktop. No celular, deslize ou use as setas.
 - Detalhes de cada projeto em um modal com descrição, tecnologias e link para o site.
 - Menu em tela cheia, cursor contextual, rastro discreto do ponteiro, botões com deslocamento suave e faixa tipográfica em movimento.
-- Tipografia animada no rodapé e som ambiente original opcional, desligado por padrão.
+- Tipografia animada no rodapé e música instrumental retrô opcional, desligada por padrão.
 - WhatsApp ao lado do Instagram.
 
 A referência orienta os tipos de movimento; o código, a escultura e os elementos gráficos desta versão foram construídos para a EWS. Modelos, textos e arquivos do site de referência não foram incorporados.
 
 ## Celular, teclado e movimento reduzido
+
+No celular, a escultura tem uma área própria acima do título. A câmera enquadra toda a peça durante a rotação, sem sobrepor as letras. O enquadramento do desktop permanece igual. Todos os cartões de projetos usam o mesmo fundo azul da EWS.
 
 A rolagem é nativa: não interceptamos a roda do mouse nem os gestos de toque. As cenas fixas e a galeria guiada por scroll funcionam a partir de 900 px de largura e 760 px de altura. Em telas menores ou baixas, os serviços ficam em sequência; os projetos usam uma galeria por toque no celular ou uma grade em desktops baixos.
 
@@ -51,6 +53,17 @@ npm --prefix source run build
 
 Não publique a pasta `source/node_modules`. O arquivo `scene.js` resultante já inclui o necessário para o navegador.
 
+## Música
+
+A faixa é **Twilight Echo**, de **Scott Buckley**, um instrumental de clima retrô. O crédito está no rodapé, com links para o autor e a licença CC BY 4.0.
+
+- Fonte: https://www.scottbuckley.com.au/library/twilight-echo/
+- Licença: https://creativecommons.org/licenses/by/4.0/
+- Arquivo: `assets/audio/twilight-echo.mp3`, convertido para MP3 de 96 kbps, sem cortes.
+- A música só carrega e toca quando o visitante ativa o botão. O volume entra gradualmente e pode ser desligado. Abas em segundo plano pausam a reprodução.
+
+Para substituir a faixa, atualize o `src` do elemento `#background-music` em `index.html`, os créditos no rodapé e as informações em `THIRD-PARTY-NOTICES.txt`.
+
 ## Contatos e projetos
 
 WhatsApp: **(14) 99827-7583**, usando `https://wa.me/5514998277583` com mensagem pronta. Para alterar, substitua as duas ocorrências do número em `index.html`.
@@ -75,7 +88,7 @@ Cada `article.project-card` corresponde a um `template` com o mesmo índice: `da
 
 ```sh
 git add index.html style.css script.js scene.js source favicon.svg assets README.md THIRD-PARTY-NOTICES.txt
-git commit -m "Adapta EWS TECH com experiencia imersiva e galeria de projetos"
+git commit -m "Ajusta escultura mobile, padroniza projetos e troca trilha sonora"
 git push
 ```
 

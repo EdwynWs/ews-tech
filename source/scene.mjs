@@ -68,6 +68,9 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
       roughness: 0.17,
       envMapIntensity: 1.2,
     });
+    geometry.computeBoundingSphere();
+    const radius = geometry.boundingSphere.radius;
+    const compactLayout = matchMedia("(max-width: 899px)");
     const sculpture = new THREE.Mesh(geometry, material);
     scene.add(sculpture);
     const blue = new THREE.PointLight(0x265bff, 24, 20);
@@ -83,7 +86,9 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
       if (now - lastFrame > 32 || motion.reduced) {
         time += Math.min((now - lastFrame) / 1000, 0.04);
         lastFrame = now;
-        const p = motion.reduced ? 0 : motion.progress;
+        // Mobile has a dedicated art row: rotation stays inside that row.
+        const compact = compactLayout.matches;
+        const p = motion.reduced || compact ? 0 : motion.progress;
         const pointerX = motion.reduced ? 0 : motion.pointerX;
         const pointerY = motion.reduced ? 0 : motion.pointerY;
         sculpture.rotation.set(
@@ -91,7 +96,11 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
           (motion.reduced ? 0.3 : time * 0.13) + p * 2.2 + pointerX * 0.14,
           -0.36 + p * 0.75,
         );
-        sculpture.position.set(0.15 - p * 0.55, 0.15 - p * 0.3, 0);
+        sculpture.position.set(
+          compact ? 0 : 0.15 - p * 0.55,
+          compact ? 0 : 0.15 - p * 0.3,
+          0,
+        );
         sculpture.scale.setScalar(1 + p * 0.32);
         try {
           renderer.render(scene, camera);
@@ -114,7 +123,16 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
       if (!width || !height) return;
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
-      camera.position.z = camera.aspect < 0.85 ? 9 : 7.5;
+      if (compactLayout.matches) {
+        // Fit the bounding sphere, so every rotation fits, not just the first frame.
+        const halfFov = THREE.MathUtils.degToRad(camera.fov / 2);
+        const limitingAngle = Math.atan(
+          Math.tan(halfFov) * Math.min(1, camera.aspect),
+        );
+        camera.position.z = (radius / Math.sin(limitingAngle)) * 1.12;
+      } else {
+        camera.position.z = camera.aspect < 0.85 ? 9 : 7.5;
+      }
       camera.updateProjectionMatrix();
       wake();
     }

@@ -755,13 +755,43 @@
         <span>E</span><span>W</span><span>S</span><span>TECH</span>
       </div>
       <div class="footer-bottom">
-        <span>© <span id="year">2026</span> EWS TECH</span
-        ><button id="sound-toggle" type="button" aria-pressed="false" hidden>
-          <span class="sound-bars" aria-hidden="true"
-            ><i></i><i></i><i></i><i></i
-          ></span>
-          SOM <span class="sound-state">DESLIGADO</span></button
-        ><span>BASTOS, SP — BRASIL</span>
+        <span>© <span id="year">2026</span> EWS TECH</span>
+        <div class="sound-control" hidden>
+          <button
+            id="sound-toggle"
+            type="button"
+            aria-pressed="false"
+            aria-label="Reproduzir música"
+            aria-describedby="music-credit"
+          >
+            <span class="sound-bars" aria-hidden="true"
+              ><i></i><i></i><i></i><i></i
+            ></span>
+            MÚSICA <span class="sound-state" aria-live="polite">DESLIGADA</span>
+          </button>
+          <span class="music-credit" id="music-credit">
+            <a
+              href="https://www.scottbuckley.com.au/library/twilight-echo/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Twilight Echo · Scott Buckley</a
+            >
+            ·
+            <a
+              href="https://creativecommons.org/licenses/by/4.0/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >CC BY 4.0</a
+            >
+          </span>
+          <audio
+            id="background-music"
+            src="assets/audio/twilight-echo.mp3"
+            preload="none"
+            loop
+          ></audio>
+        </div>
+        <span>BASTOS, SP — BRASIL</span>
       </div>
     </footer>
     <dialog
