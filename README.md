@@ -1,64 +1,63 @@
-# EWS TECH — Código-fonte completo
+# EWS TECH — Experiência de scroll
 
-Site estático em HTML, CSS e JavaScript puro. Não precisa de Node.js, npm ou compilação.
+Site completo em HTML, CSS e JavaScript puro. Sem instalação, build, bibliotecas de animação ou serviços externos obrigatórios. Abra `index.html` no navegador ou use o Live Server do VS Code.
 
-## Abrir e editar
+## O que mudou
 
-1. Extraia o ZIP.
-2. Abra a pasta ews-tech no VS Code.
-3. Abra index.html no navegador, ou use a extensão Live Server no VS Code.
-4. Edite os arquivos e atualize o navegador para ver as alterações.
+- Nova direção visual com tipografia grande, tons escuros, azul elétrico e uma seção clara sobre a EWS.
+- Abertura com profundidade: a escultura acompanha o ponteiro e se transforma com a rolagem.
+- Texto que se ilumina palavra por palavra, com transição gradual do fundo para azul.
+- Galeria com os quatro projetos originais: cartões que se sobrepõem e recuam durante a rolagem em computadores com altura suficiente.
+- Faixa tipográfica que se desloca com o scroll, entradas de conteúdo e cursor contextual nos previews.
+- WhatsApp ao lado do Instagram, usando o número confirmado: **(14) 99827-7583**.
+- Menu mobile, acesso por teclado e adaptação automática para `prefers-reduced-motion`.
+
+A rolagem continua sendo a nativa do navegador. Os efeitos não interceptam a roda do mouse nem os gestos de toque. Em telas pequenas ou baixas, os projetos voltam à sequência vertical para manter todo o conteúdo acessível. Sem JavaScript, os conteúdos e links continuam disponíveis.
 
 ## Arquivos
 
-- index.html: conteúdo, seções, navegação, links de contato e favicon embutido.
-- style.css: cores, fontes, layout, responsividade e animações.
-- projects.css: apresentação dos projetos, previews e adaptação para celular.
-- assets/projects/: imagens dos projetos em WebP, carregadas sob demanda.
-- script.js: menu mobile, animações ao rolar, efeito de movimento, detalhes expansíveis e barra de progresso.
-- hero.png: imagem principal.
+- `index.html`: seções, projetos e contatos.
+- `style.css`: layout, cores, efeitos e responsividade.
+- `script.js`: menu e animações ligadas à rolagem.
+- `favicon.svg`: ícone da marca.
+- `assets/hero.webp`: escultura azul otimizada.
+- `assets/projects/`: imagens dos quatro projetos.
 
-## Ajustes comuns
+As fontes são do sistema. As imagens são locais, em WebP. Não há dependência de CDN para carregar o site ou executar os efeitos.
 
-- Textos e Instagram: index.html. Busque por ews_tech para alterar os links de contato.
-- Cores: variáveis em :root no início de style.css.
-- Layout mobile: regras @media no final de style.css.
-- Imagem: substitua hero.png mantendo o nome ou altere o src no HTML.
+## Contatos
 
-As fontes DM Sans e Manrope são carregadas pelo Google Fonts e precisam de internet. Sem internet, o navegador utiliza uma fonte alternativa.
+O botão do WhatsApp abre `https://wa.me/5514998277583` com uma mensagem pronta. Para trocar o número, pesquise `5514998277583` em `index.html` e altere as duas ocorrências.
 
-Todos os arquivos do site publicado estão incluídos sem minificação. O site é apenas front-end, e o contato abre o Instagram; não há backend nem banco de dados.
+O Instagram preserva o destino do site anterior: `https://www.instagram.com/ews_tec/`.
 
-Para hospedar, publique os arquivos HTML, CSS e JavaScript, hero.png e a pasta assets juntos, com index.html na raiz. No Vercel, mantenha a configuração de site estático, sem comando de build.
+## Projetos
 
-## Atualizar o portfólio
+Os quatro projetos publicados preservam suas URLs, descrições, imagens e tecnologias. Para adicionar outro, duplique um `article.work-card` e ajuste o ID, `aria-labelledby`, título, descrição, tecnologias, os dois links e a imagem. Ajuste também a contagem de projetos no cabeçalho e nos cartões.
 
-A seção `#projetos` em `index.html` reúne os quatro projetos publicados do portfólio pessoal, com as mesmas descrições, tecnologias e URLs. Os demais projetos aparecem em cartões compactos, sem links porque não há URLs cadastradas na origem.
+## Aplicar ao seu projeto
 
-Para adicionar um projeto, duplique um `article.project`, atribua um número e um ID exclusivos, atualize o título, a descrição, as tecnologias e os dois links (preview e botão). Salve a captura em `assets/projects/` e ajuste `src`, `alt`, `width` e `height` da imagem. O layout e o carregamento das imagens continuam funcionando sem JavaScript.
-
-As imagens foram copiadas de `EdwynWs/edwyn-portfolio` e otimizadas em WebP. Não dependem do domínio do portfólio pessoal. Esta migração não altera o repositório de origem.
-
-
-## Aplicar esta atualização ao GitHub
-
-1. Na sua cópia local de `EdwynWs/ews-tech`, execute `git pull` antes de copiar os arquivos.
-2. Copie `index.html`, `projects.css`, `README.md` e a pasta `assets/projects/` deste pacote para a raiz do projeto. Os arquivos `style.css`, `script.js` e `hero.png` não foram alterados.
-3. Abra `index.html` no navegador e confira a seção Projetos no computador e no celular.
+1. Na pasta local de `EdwynWs/ews-tech`, execute `git pull` para obter a versão mais recente.
+2. Copie o conteúdo da pasta `ews-tech` deste ZIP para a raiz do projeto, substituindo os arquivos com o mesmo nome.
+3. Abra `index.html` para conferir a nova versão.
 4. Execute:
 
 ```sh
-git add index.html projects.css README.md assets/projects
-git commit -m "Adiciona projetos do portfolio pessoal ao site da EWS TECH"
+git add index.html style.css script.js favicon.svg assets README.md
+git commit -m "Redesenha EWS TECH com efeitos de scroll e contato por WhatsApp"
 git push
 ```
 
-Se o Vercel estiver conectado à branch atualizada, ele iniciará um novo deploy. A integração desta conversa retornou HTTP 403 ao tentar gravar no GitHub; nenhum commit remoto ou deploy foi realizado.
+Se o Vercel estiver conectado à branch atualizada, o push iniciará um deploy. Não é necessário instalar dependências ou configurar um comando de build. Os antigos `projects.css` e `hero.png` deixam de ser usados; mantê-los na pasta não interfere na nova versão.
 
-### Validação
+## Validação realizada
 
-- Quatro projetos publicados e quatro projetos adicionais conferidos com o código de origem.
-- Descrições, tecnologias e URLs de origem preservadas.
-- Âncoras únicas, arquivos estáticos servidos com HTTP 200 e dimensões das imagens verificadas.
-- `node --check script.js` e `git diff --check` sem erros.
-- Validação visual no navegador pendente: o ambiente não conseguiu instalar o Chromium nem abrir a prévia local.
+- Chromium: 1440×1000, 1366×768, 900×700, 768×1024, 390×844 e 320×740.
+- Sem rolagem horizontal nos tamanhos verificados.
+- Menu mobile abre, navega e fecha corretamente.
+- Todas as imagens carregam; WhatsApp e Instagram permanecem dentro da tela.
+- Nenhum erro de execução de JavaScript nos testes.
+- Conteúdo disponível sem JavaScript e com movimento reduzido.
+- Verificação de sintaxe de JavaScript e de diferenças do Git.
+
+Esta entrega contém os arquivos prontos. Nenhum deploy ou commit remoto foi realizado nesta conversa.
