@@ -121,6 +121,11 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
       const width = container.clientWidth;
       const height = container.clientHeight;
       if (!width || !height) return;
+      const density = Math.min(
+        devicePixelRatio,
+        compactLayout.matches ? 1.15 : 1.5,
+      );
+      if (renderer.getPixelRatio() !== density) renderer.setPixelRatio(density);
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
       if (compactLayout.matches) {
@@ -169,7 +174,7 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
     });
     addEventListener("ews:motionchange", () => {
       lastFrame = 0;
-      wake();
+      resize();
     });
     resize();
   } catch {

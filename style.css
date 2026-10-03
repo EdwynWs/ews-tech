@@ -2910,3 +2910,63 @@ footer {
     transform: none !important;
   }
 }
+
+/* Pin only when the complete stage fits the current CSS viewport. */
+html {
+  overflow-anchor: none;
+}
+.immersive:not(.pin-hero) .hero,
+.immersive:not(.pin-vision) .vision,
+.immersive:not(.pin-portal) .portal {
+  height: auto;
+  min-height: 0;
+}
+.immersive:not(.pin-hero) .hero-stage,
+.immersive:not(.pin-vision) .vision-stage,
+.immersive:not(.pin-portal) .portal-stage {
+  position: relative;
+  height: auto;
+  max-height: none;
+}
+.pin-hero .hero-stage,
+.pin-vision .vision-stage,
+.pin-portal .portal-stage,
+.desktop-scenes .services-stage,
+.desktop-gallery .work-stage {
+  height: var(--viewport-height, 100svh);
+}
+.pin-hero .hero {
+  height: calc(var(--viewport-height, 100svh) * 1.55);
+}
+.pin-vision .vision {
+  height: calc(var(--viewport-height, 100svh) * 1.8);
+}
+.pin-portal .portal {
+  height: calc(var(--viewport-height, 100svh) * 1.85);
+}
+.desktop-scenes .services {
+  height: calc(var(--viewport-height, 100svh) * 4.2);
+}
+.desktop-gallery .work {
+  height: calc(var(--viewport-height, 100svh) * 4.3);
+}
+@media (min-width: 900px) {
+  .js:not(.desktop-gallery) .gallery-viewport {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--gutter);
+    padding-bottom: 20px;
+    overscroll-behavior-x: contain;
+  }
+  .js:not(.desktop-gallery) .gallery-track {
+    display: flex;
+    width: max-content;
+    gap: 32px;
+    padding-right: var(--gutter);
+  }
+  .js:not(.desktop-gallery) .project-card {
+    width: min(76vw, 1150px);
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+}

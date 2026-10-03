@@ -39,6 +39,10 @@
   const projectNumber = $("#project-current");
   let motion = false;
   let desktop = false;
+  let pinnedServices = false;
+  let pinHero = false;
+  let pinVision = false;
+  let pinPortal = false;
   let frame = 0;
   let activeProject = 0;
   let activeService = -1;
@@ -47,7 +51,25 @@
   let cardStride = 0;
   let pageHeight = 1;
   let viewportHeight = innerHeight;
-  let resizeTimer;
+  let layoutFrame = 0;
+  let configuring = false;
+  let bookmark = null;
+  let layoutSignature = "";
+  const sections = [
+    hero,
+    vision,
+    services,
+    portal,
+    work,
+    $(".studio"),
+    $(".marquee"),
+    $(".contact"),
+    $("footer"),
+  ];
+  const keyOf = (section) =>
+    section.classList[0] || section.tagName.toLowerCase();
+  const stageOf = (section) =>
+    section.querySelector(":scope > [class$='-stage']");
   window.EWSSceneState = {
     progress: 0,
     pointerX: 0,
@@ -192,24 +214,99 @@
   } else revealTargets.forEach((target) => target.classList.add("visible"));
 
   function measure() {
-    viewportHeight = innerHeight;
-    [hero, vision, services, portal, work].forEach((section) => {
-      geometry[section.classList[0]] = {
-        top: section.offsetTop,
-        height: section.offsetHeight,
+    viewportHeight = root.clientHeight;
+    sections.forEach((section) => {
+      const stage = stageOf(section);
+      const rect = section.getBoundingClientRect();
+      const pinned = stage && getComputedStyle(stage).position === "sticky";
+      geometry[keyOf(section)] = {
+        top: rect.top + scrollY,
+        height: rect.height,
+        pinned,
+        travel: Math.max(
+          1,
+          rect.height -
+            (pinned ? stage.getBoundingClientRect().height : viewportHeight),
+        ),
       };
     });
     cardStride =
-      cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : 0;
-    galleryDistance = cardStride * (cards.length - 1);
+      cards.length > 1
+        ? cards[1].getBoundingClientRect().left -
+          cards[0].getBoundingClientRect().left
+        : 0;
+    galleryDistance = cardStride * Math.max(0, cards.length - 1);
     pageHeight = Math.max(1, root.scrollHeight - viewportHeight);
-    schedule();
   }
   function progress(section, y) {
     const bounds = geometry[section];
-    return clamp(
-      (y - bounds.top) / Math.max(1, bounds.height - viewportHeight),
-    );
+    return clamp((y - bounds.top) / bounds.travel);
+  }
+  function rememberView(y) {
+    if (y < 2) return { top: true };
+    const section =
+      [...sections]
+        .reverse()
+        .find(
+          (node) => geometry[keyOf(node)].top <= y + header.offsetHeight + 1,
+        ) || hero;
+    const bounds = geometry[keyOf(section)];
+    let service = activeService;
+    if (section === services && !pinnedServices) {
+      service = Math.max(
+        0,
+        scenes.findLastIndex(
+          (scene) =>
+            scene.getBoundingClientRect().top <= header.offsetHeight + 40,
+        ),
+      );
+    }
+    return {
+      section,
+      pinned: bounds.pinned,
+      fraction: progress(keyOf(section), y),
+      ratio: (y - bounds.top) / bounds.height,
+      service,
+      project: activeProject,
+    };
+  }
+  function restoreView(saved) {
+    if (!saved || saved.top) {
+      if (saved?.top) scrollTo({ top: 0, behavior: "instant" });
+      return;
+    }
+    const { section } = saved;
+    const bounds = geometry[keyOf(section)];
+    let target = bounds.top + saved.ratio * bounds.height;
+    if (section === work) {
+      if (desktop)
+        target =
+          bounds.top +
+          (saved.pinned
+            ? saved.fraction
+            : saved.project / Math.max(1, cards.length - 1)) *
+            bounds.travel;
+      else {
+        target = saved.pinned
+          ? bounds.top
+          : bounds.top + saved.ratio * bounds.height;
+        viewport.scrollLeft = cardStride * saved.project;
+        setProject(saved.project);
+      }
+    } else if (section === services && saved.pinned !== bounds.pinned) {
+      const index = clamp(saved.service, 0, scenes.length - 1);
+      target = pinnedServices
+        ? bounds.top + ((index + 0.4) / (scenes.length - 0.15)) * bounds.travel
+        : scenes[index].getBoundingClientRect().top +
+          scrollY -
+          header.offsetHeight -
+          24;
+    } else if (bounds.pinned) {
+      target =
+        bounds.top +
+        (saved.pinned ? saved.fraction : clamp(saved.ratio)) * bounds.travel;
+    }
+    scrollTo({ top: clamp(target, 0, pageHeight), behavior: "instant" });
   }
   function setProject(index) {
     activeProject = clamp(index, 0, cards.length - 1);
@@ -223,7 +320,7 @@
       const bounds = geometry.work;
       const fraction = index / (cards.length - 1);
       window.scrollTo({
-        top: bounds.top + fraction * (bounds.height - viewportHeight),
+        top: bounds.top + fraction * bounds.travel,
         behavior,
       });
     } else viewport.scrollTo({ left: cardStride * index, behavior });
@@ -251,22 +348,26 @@
 
   function render() {
     frame = 0;
+    if (layoutFrame || configuring) return;
     const y = scrollY;
+    bookmark = rememberView(y);
     header.classList.toggle("scrolled", y > 45);
     progressBar.style.transform = `scaleX(${clamp(y / pageHeight)})`;
     if (!motion) return;
-    const hp = progress("hero", y);
+    const hp = pinHero ? progress("hero", y) : 0;
     window.EWSSceneState.progress = hp;
     heroHeading.style.transform = `translate3d(${-hp * 3}%,${-hp * 35}px,0)`;
     heroHeading.style.opacity = 1 - hp * 0.4;
-    const vp = progress("vision", y);
+    const vp = pinVision ? progress("vision", y) : 1;
     const entrance = clamp(
       (viewportHeight - (geometry.vision.top - y)) / viewportHeight,
     );
     visionLines.forEach((line, index) => {
       const amount = (1 - ease(entrance)) * (index % 2 ? -100 : 100);
-      line.style.transform = `translate3d(${amount + vp * (index % 2 ? 32 : -25)}px,0,0)`;
-      line.style.opacity = 0.3 + entrance * 0.7;
+      line.style.transform = pinVision
+        ? `translate3d(${amount + vp * (index % 2 ? 32 : -25)}px,0,0)`
+        : "none";
+      line.style.opacity = pinVision ? 0.3 + entrance * 0.7 : 1;
     });
     visionStar.style.transform = `rotate(${vp * 165 + entrance * 30}deg)`;
     words.forEach((word, index) =>
@@ -275,7 +376,7 @@
         vp > (index / words.length) * 0.68 || vp > 0.75,
       ),
     );
-    if (desktop) {
+    if (pinnedServices) {
       const sp = progress("services", y);
       const position = sp * (scenes.length - 0.15);
       const current = Math.min(scenes.length - 1, Math.floor(position));
@@ -307,11 +408,13 @@
         sceneVisuals[index].style.transform =
           `perspective(1000px) translate3d(0,${(0.5 - phase) * 24}px,0) rotateY(${(1 - arrival) * -12}deg)`;
       });
+    }
+    if (desktop) {
       const wp = progress("work", y);
       track.style.transform = `translate3d(${-wp * galleryDistance}px,0,0)`;
       setProject(Math.round(wp * (cards.length - 1)));
     }
-    const pp = progress("portal", y);
+    const pp = pinPortal ? progress("portal", y) : 1;
     const pe = clamp(
       (viewportHeight - (geometry.portal.top - y)) / viewportHeight,
     );
@@ -321,39 +424,97 @@
     portalCopy.style.transform = `translate3d(0,${(1 - ease(pp / 0.6)) * 90}px,0) scale(${0.86 + ease(pp / 0.8) * 0.14})`;
     portalCopy.style.filter = `blur(${(1 - ease(pp / 0.55)) * 10}px)`;
     // The visible edge introduces the portal before its pinned expansion starts.
-    portalCircle.style.opacity = 0.3 + pe * 0.7;
+    portalCircle.style.opacity = pinPortal ? 0.3 + pe * 0.7 : 1;
     const marqueeTop = marquee.parentElement.offsetTop;
     marquee.style.transform = `translate3d(${-clamp((y + viewportHeight - marqueeTop) / (viewportHeight * 2)) * 320}px,0,0)`;
+    bookmark = rememberView(y);
   }
   function schedule() {
     if (!frame) frame = requestAnimationFrame(render);
   }
 
-  function configure() {
+  function signature() {
+    return [
+      root.clientWidth,
+      root.clientHeight,
+      ...sections.map((section) => section.offsetHeight),
+      ...sceneCopies.map((copy) => copy.offsetHeight),
+      ...cards.map((card) => card.offsetHeight),
+    ].join(":");
+  }
+  function stageFits(section) {
+    const stage = stageOf(section);
+    const box = stage.getBoundingClientRect();
+    if (box.height > viewportHeight + 1) return false;
+    // Decorative circles/canvases may intentionally overflow. Check the content.
+    return [...stage.children].every((child) => {
+      const position = getComputedStyle(child).position;
+      if (position === "absolute" || position === "fixed") return true;
+      const rect = child.getBoundingClientRect();
+      return rect.top >= box.top - 2 && rect.bottom <= box.bottom + 2;
+    });
+  }
+  function configure(saved = null) {
+    configuring = true;
     const oldDesktop = desktop;
+    const project = saved?.project ?? activeProject;
     motion = !reduced.matches && "IntersectionObserver" in window;
-    desktop = motion && innerWidth >= 900 && innerHeight >= 760;
+    viewportHeight = root.clientHeight;
+    root.style.setProperty("--viewport-height", `${viewportHeight}px`);
+    const wide = matchMedia("(min-width: 900px)").matches;
     root.classList.toggle("immersive", motion);
-    root.classList.toggle("desktop-scenes", desktop);
+    // Try the rich layouts, then retain only the stages whose content fits.
+    for (const name of ["pin-hero", "pin-vision", "pin-portal"])
+      root.classList.toggle(name, motion);
+    root.classList.toggle("desktop-scenes", motion && wide);
+    root.classList.toggle("desktop-gallery", motion && wide);
+    [heroHeading, ...visionLines, portalCopy].forEach((node) =>
+      node.removeAttribute("style"),
+    );
+    sceneCopies.forEach((copy) => copy.removeAttribute("style"));
+    sceneVisuals.forEach((visual) => visual.removeAttribute("style"));
+    pinHero = motion && wide && stageFits(hero);
+    pinVision = motion && stageFits(vision);
+    pinPortal = motion && stageFits(portal);
+    const sceneRoom = $(".service-scenes").clientHeight;
+    pinnedServices =
+      motion &&
+      wide &&
+      stageFits(services) &&
+      scenes.every((scene, index) => {
+        const css = getComputedStyle(scene);
+        const padding =
+          parseFloat(css.paddingTop) + parseFloat(css.paddingBottom);
+        return (
+          Math.max(
+            sceneCopies[index].scrollHeight,
+            sceneVisuals[index].offsetHeight,
+          ) +
+            padding <=
+          sceneRoom + 2
+        );
+      });
+    desktop = motion && wide && stageFits(work);
+    root.classList.toggle("pin-hero", pinHero);
+    root.classList.toggle("pin-vision", pinVision);
+    root.classList.toggle("pin-portal", pinPortal);
+    root.classList.toggle("desktop-scenes", pinnedServices);
     root.classList.toggle("desktop-gallery", desktop);
     window.EWSSceneState.reduced = !motion;
     activeService = -1;
-    const horizontal = desktop || innerWidth < 900;
-    previous.hidden = next.hidden = !horizontal;
+    previous.hidden = next.hidden = cards.length < 2;
     $(".gallery-hint").textContent = desktop
       ? "ROLE PARA CONHECER OS PROJETOS ↓"
-      : horizontal
-        ? "DESLIZE PARA EXPLORAR →"
-        : "ESCOLHA UM PROJETO PARA CONHECER";
-    if (!desktop) {
+      : "USE AS SETAS OU DESLIZE PARA EXPLORAR →";
+    if (!pinnedServices) {
       scenes.forEach((scene, index) => {
         scene.removeAttribute("style");
         scene.inert = false;
         sceneCopies[index].removeAttribute("style");
         sceneVisuals[index].removeAttribute("style");
       });
-      track.style.transform = "";
     }
+    if (!desktop) track.style.transform = "";
     if (!motion) {
       [
         heroHeading,
@@ -366,27 +527,59 @@
       ].forEach((node) => node.removeAttribute("style"));
       words.forEach((word) => word.classList.add("lit"));
       revealTargets.forEach((target) => target.classList.add("visible"));
+      window.EWSSceneState.progress = 0;
     }
-    if (oldDesktop !== desktop) viewport.scrollLeft = 0;
-    setProject(0);
+    if (desktop && oldDesktop !== desktop) viewport.scrollLeft = 0;
     measure();
+    if (!desktop) viewport.scrollLeft = cardStride * project;
+    setProject(project);
+    restoreView(saved);
+    layoutSignature = signature();
+    configuring = false;
+    render();
+    // Includes monitor density / browser zoom changes for the WebGL canvas.
     dispatchEvent(new CustomEvent("ews:motionchange"));
   }
+  function queueLayout() {
+    if (layoutFrame || configuring) return;
+    const saved = bookmark ? { ...bookmark, project: activeProject } : null;
+    if (frame) {
+      cancelAnimationFrame(frame);
+      frame = 0;
+    }
+    layoutFrame = requestAnimationFrame(() => {
+      layoutFrame = 0;
+      configure(saved);
+    });
+  }
   addEventListener("scroll", schedule, { passive: true });
-  addEventListener(
+  addEventListener("resize", queueLayout, { passive: true });
+  // Pinch zoom does not change the layout viewport; leave it to the browser.
+  window.visualViewport?.addEventListener(
     "resize",
     () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(configure, 150);
+      if (
+        root.clientHeight !== viewportHeight ||
+        signature() !== layoutSignature
+      )
+        queueLayout();
     },
     { passive: true },
   );
-  reduced.addEventListener("change", configure);
+  reduced.addEventListener("change", queueLayout);
   configure();
-  document.fonts?.ready.then(measure);
-  addEventListener("load", measure, { once: true });
-  if ("ResizeObserver" in window)
-    new ResizeObserver(measure).observe($(".studio"));
+  document.fonts?.ready.then(queueLayout);
+  document.fonts?.addEventListener("loadingdone", queueLayout);
+  addEventListener("load", queueLayout, { once: true });
+  addEventListener("pageshow", queueLayout);
+  if ("ResizeObserver" in window) {
+    const observer = new ResizeObserver(() => {
+      if (!configuring && signature() !== layoutSignature) queueLayout();
+    });
+    [...sections, ...sceneCopies, ...cards].forEach((element) =>
+      observer.observe(element),
+    );
+  }
 
   // Short entrance, never a loading gate: content remains usable immediately.
   const introNumber = $(".intro-number");
